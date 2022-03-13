@@ -6,16 +6,19 @@ import br.com.alura.rh.model.Employee;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
+import java.util.List;
 
 public class SalaryAdjustmentService {
-    public void updateSalary(Employee employee, BigDecimal amount) {
-        BigDecimal currentSalary = employee.getSalary();
-        BigDecimal adjustmentPercentage = amount.divide(currentSalary, RoundingMode.HALF_UP);
-        if (adjustmentPercentage.compareTo(new BigDecimal("0.4")) > 0) {
-            throw new ValidationException("Salary adjustment cannot be higher than 40% of the salary amount!");
-        }
+    private List<ValidationSalaryAdjustment> validations;
 
-        BigDecimal salaryReadjusted = currentSalary.add(amount);
+    public SalaryAdjustmentService(List<ValidationSalaryAdjustment> validations) {
+        this.validations = validations;
+    }
+
+    public void updateSalary(Employee employee, BigDecimal amount) {
+        this.validations.forEach(validation -> validation.validate(employee, amount));
+
+        BigDecimal salaryReadjusted = employee.getSalary().add(amount);
         employee.setSalary(salaryReadjusted);
         employee.setDateOfLastSalaryAdjustment(LocalDate.now());
     }
