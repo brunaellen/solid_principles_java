@@ -21,16 +21,6 @@ public class Employee {
 		this.salary = salary;
 	}
 
-	public void updateSalary(BigDecimal amount) {
-		BigDecimal adjustmentPercentage = amount.divide(salary, RoundingMode.HALF_UP);
-		if (adjustmentPercentage.compareTo(new BigDecimal("0.4")) > 0) {
-			throw new ValidationException("Salary adjustment cannot be higher than 40% of the salary amount!");
-		}
-		this.salary = this.salary.add(amount);
-		this.dateOfLastSalaryAdjustment = LocalDate.now();
-	}
-
-
 	public String getName() {
 		return name;
 	}
