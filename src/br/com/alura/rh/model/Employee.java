@@ -1,54 +1,30 @@
 package br.com.alura.rh.model;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.time.LocalDate;
 
-import br.com.alura.rh.ValidationException;
-
 public class Employee {
-
-	private String name;
-	private String cpf;
-	private Role role;
-	private BigDecimal salary;
+	private PersonalDetails personalDetails;
 	private LocalDate dateOfLastSalaryAdjustment;
 
 	public Employee(String name, String cpf, Role role, BigDecimal salary) {
-		this.name = name;
-		this.cpf = cpf;
-		this.role = role;
-		this.salary = salary;
+		this.personalDetails = new PersonalDetails(name, cpf, role, salary);
 	}
 
 	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
+		return personalDetails.getName();
 	}
 
 	public String getCpf() {
-		return cpf;
-	}
-
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
+		return personalDetails.getCpf();
 	}
 
 	public Role getRole() {
-		return role;
+		return personalDetails.getRole();
 	}
-
-	public void setRole(Role role) {this.role = role;}
 
 	public BigDecimal getSalary() {
-		return salary;
-	}
-
-	public void setSalary(BigDecimal salary) {
-		this.salary = salary;
+		return personalDetails.getSalary();
 	}
 
 	public LocalDate getDateOfLastSalaryAdjustment() {
@@ -60,6 +36,6 @@ public class Employee {
 	}
 
     public void promote(Role newRole) {
-		this.role = newRole;
+		personalDetails.updateRole(newRole);
     }
 }
